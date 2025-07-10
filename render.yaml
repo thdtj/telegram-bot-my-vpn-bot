@@ -1,8 +1,9 @@
 services:
   - type: web
-    name: telegram-bot
-    runtime: docker
-    dockerfilePath: Dockerfile
-    plan: free
-    branch: main
+    name: my-telegram-bot
+    runtime: dotnet
+    branch: main         # اگر branch دیگه‌ای استفاده می‌کنی، این رو تغییر بده
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/MyTelegramBot.dll
     autoDeploy: true
+    region: frankfurt    # یا oregon یا هر ناحیه دیگه

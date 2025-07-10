@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: my-telegram-bot
-    env: docker
-    branch: main
-    buildCommand: "dotnet publish -c Release -o out"
-    startCommand: "dotnet out/MyTelegramBot.dll"
-    autoDeploy: true
-    region: frankfurt

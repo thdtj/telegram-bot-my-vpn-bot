@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: telegram-bot
+    env: dotnet
+    buildCommand: dotnet build
+    startCommand: dotnet run
+    envVars:
+      - key: DOTNET_ENVIRONMENT
+        value: Production

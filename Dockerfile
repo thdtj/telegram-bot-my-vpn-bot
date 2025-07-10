@@ -6,9 +6,12 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-COPY . .
-
+# فقط فایل csproj را کپی کن و restore بزن
+COPY MyTelegramBot.csproj ./
 RUN dotnet restore
+
+# حالا بقیه فایل‌ها را کپی و publish کن
+COPY . ./
 RUN dotnet publish -c Release -o /app/publish
 
 # مرحله سوم: اجرای اپلیکیشن نهایی

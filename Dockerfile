@@ -1,22 +1,32 @@
-# مرحله اول: آماده‌سازی محیط اجرایی
+# ========================
+# مرحله ۱: ایمیج بیس برای اجرا
+# ========================
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# مرحله دوم: بیلد پروژه
+# ========================
+# مرحله ۲: بیلد پروژه
+# ========================
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-# فقط فایل csproj را کپی کن و restore بزن
-COPY MyTelegramBot.csproj ./
-RUN dotnet restore
+# کپی کل سورس پروژه
+COPY . .
 
-# حالا بقیه فایل‌ها را کپی و publish کن
-COPY . ./
+# بازیابی پکیج‌ها و بیلد
+RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
-# مرحله سوم: اجرای اپلیکیشن نهایی
+# ========================
+# مرحله ۳: اجرای نهایی اپلیکیشن
+# ========================
 FROM base AS final
 WORKDIR /app
+
+# کپی فایل‌های بیلد شده از مرحله قبلی
 COPY --from=build /app/publish .
 
+# اجرای فایل اصلی اپلیکیشن
 ENTRYPOINT ["dotnet", "MyTelegramBot.dll"]

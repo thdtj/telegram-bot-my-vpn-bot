@@ -1,7 +1,7 @@
 services:
   - type: web
     name: telegram-bot
-    env: docker
+    runtime: docker
     dockerfilePath: Dockerfile
     plan: free
     branch: main
